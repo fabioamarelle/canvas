@@ -1,21 +1,28 @@
 package com.canvas.server.controllers;
 
-import com.canvas.server.models.User;
-import com.canvas.server.entities.enums.PermissionType;
-import com.canvas.server.models.AllowedUser;
-import com.canvas.server.utilities.dao.UserDAO;
-import com.canvas.server.utilities.dao.WhiteboardDAO;
-import com.canvas.server.utilities.logging.LoggingHelper;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.canvas.server.entities.enums.PermissionType;
+import com.canvas.server.models.AllowedUser;
+import com.canvas.server.models.User;
+import com.canvas.server.utilities.dao.UserDAO;
+import com.canvas.server.utilities.dao.WhiteboardDAO;
+import com.canvas.server.utilities.logging.LoggingHelper;
+
 @RestController
 @RequestMapping("/api/whiteboards/{id}/collaborators")
-@CrossOrigin(origins = "*")
 public class PermissionController {
 
     @GetMapping
