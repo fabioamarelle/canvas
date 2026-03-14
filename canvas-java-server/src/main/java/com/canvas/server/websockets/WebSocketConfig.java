@@ -18,11 +18,7 @@ public class WebSocketConfig implements WebSocketConfigurer {
 
     @Override
     public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
-        registry.addHandler(whiteboardWebSocketHandler, "/ws/whiteboard/*")
-            .setAllowedOrigins(
-                "https://canvas.fabioamarelle.com", 
-                "http://localhost:5173",
-                "http://localhost"
-            );
-    }
+    registry.addHandler(whiteboardWebSocketHandler, "/ws/whiteboard/*")
+        .setAllowedOrigins("*");
+}
 }
