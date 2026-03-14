@@ -77,7 +77,7 @@ const LoginForm = ({ onAuthSuccess }) => {
           )}
 
           <Link to="/register" className="auth-link">
-            No tens compte? Crea'n un ara
+            No tens compte? Registra't
           </Link>
         </form>
       </div>
