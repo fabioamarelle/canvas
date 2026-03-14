@@ -12,7 +12,7 @@ services:
       - "3306:3306"
     volumes:
       - db_data:/var/lib/mysql
-      - ./canvas-mysql-database:/docker-entrypoint-initdb.d
+      - ./canvas-mysql-database/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
 
   backend:
     build: ./canvas-java-server
