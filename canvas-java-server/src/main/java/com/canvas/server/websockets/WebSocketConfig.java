@@ -20,7 +20,7 @@ public class WebSocketConfig implements WebSocketConfigurer {
     @Override
     public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
         registry.addHandler(whiteboardWebSocketHandler, "/ws/whiteboard/{id}") 
-            .setAllowedOrigins(
+            .setAllowedOriginPatterns(
                 "https://canvas.fabioamarelle.com", 
                 "http://localhost:5173", 
                 "http://localhost"
