@@ -1,0 +1,110 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+.editor-container {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background-color: #f8f9fa;
+  background-image: radial-gradient(#d1d1d1 1.5px, transparent 1px);
+  background-size: 20px 20px;
+  font-family: 'Inter', sans-serif;
+}
+
+.editor-header {
+  height: 50px;
+  background: white;
+  display: flex;
+  align-items: center;
+  padding: 0 10px 10px 10px;
+
+  gap: 20px;
+  border-bottom: 1px solid #dfe1e6;
+  z-index: 10;
+}
+
+.editor-header h2 {
+  font-size: 16px;
+  margin: 0;
+  color: #172b4d;
+}
+
+.canvas-area {
+  flex: 1;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.empty-canvas-msg {
+  color: #5e6c84;
+  text-align: center;
+  pointer-events: none;
+}
+
+.toolbar {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 8px;
+  background-color: white;
+  padding: 8px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(9, 30, 66, 0.15);
+  border: 1px solid #dfe1e6;
+  z-index: 100;
+}
+
+.back-button {
+  background-color: #235fac;
+  color: white;
+  font-size: 18px;
+  cursor: pointer;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: background-color 0.2s, transform 0.1s;
+}
+
+.back-button:hover {
+  background-color: #1a4a86;
+}
+
+.back-button:active {
+  transform: scale(0.95);
+}
+
+.element-button {
+  border: none;
+  padding: 10px 16px;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background-color: transparent;
+  color: #42526e;
+}
+
+.element-button:hover {
+  background-color: #f4f5f7;
+  color: #172b4d;
+}
+
+.element-button.active {
+  background-color: #deebff;
+  color: #0052cc;
+  box-shadow: inset 0 0 0 1px #0052cc;
+}
+
+.element-button-inactive {
+  opacity: 0.8;
+}
+

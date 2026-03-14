@@ -1,0 +1,162 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+.dashboard-layout {
+    min-height: 100vh;
+    background-color: #f4f5f7;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    color: #172b4d;
+    -webkit-font-smoothing: antialiased;
+}
+
+.dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 32px;
+    background-color: white;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    margin-bottom: 32px;
+}
+
+.dashboard-header h1 {
+    font-size: 20px;
+    font-weight: 600;
+    color: #172b4d;
+    margin: 0;
+}
+
+.header-logo-banner {
+    width: 150px;
+    object-fit: contain;
+}
+
+.dashboard-main {
+    padding: 0 32px 32px 32px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.whiteboard-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 24px;
+    align-items: start;
+}
+
+.empty-state {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 60px 40px;
+    color: #5e6c84;
+    background: white;
+    border-radius: 8px;
+    border: 2px dashed #dfe1e6;
+    font-size: 16px;
+}
+
+.avatar-trigger {
+    cursor: pointer;
+    transition: opacity 0.2s;
+}
+
+.avatar-trigger:hover {
+    opacity: 0.8;
+}
+
+.profile-popup {
+    position: absolute;
+    top: 60px;
+    right: 20px;
+    width: 280px;
+    background: white;
+    border-radius: 4px;
+    box-shadow: 0 8px 16px -4px rgba(9, 30, 66, 0.25), 0 0 0 1px rgba(9, 30, 66, 0.08);
+    z-index: 1000;
+    padding: 16px;
+    color: #172b4d;
+}
+
+.popup-header {
+    display: flex;
+    justify-content: center;
+    position: relative;
+    padding-bottom: 12px;
+    margin-bottom: 8px;
+    border-bottom: 1px solid #ebecf0;
+    font-size: 11px;
+    text-transform: uppercase;
+    font-weight: 700;
+    color: #5e6c84;
+    letter-spacing: 0.5px;
+}
+
+.profile-popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 999;
+    background: transparent;
+}
+
+.close-popup {
+    position: absolute;
+    right: -5px;
+    top: -8px;
+    background: none;
+    border: none;
+    font-size: 18px;
+    cursor: pointer;
+    color: #6b778c;
+}
+
+.close-popup:hover {
+    color: #172b4d;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 0 16px 0;
+}
+
+.user-name {
+    font-weight: 600;
+    font-size: 14px;
+    margin: 0;
+    color: #172b4d;
+}
+
+.user-email {
+    font-size: 12px;
+    color: #5e6c84;
+    margin: 4px 0 0 0;
+}
+
+.popup-menu {
+    list-style: none;
+    padding: 0;
+    margin: 8px 0;
+}
+
+.popup-menu li {
+    padding: 8px 12px;
+    cursor: pointer;
+    border-radius: 3px;
+    font-size: 14px;
+    color: #172b4d;
+    transition: background 0.1s;
+}
+
+.popup-menu li:hover {
+    background-color: #f4f5f7;
+    color: #0052cc;
+}
+
+hr {
+    border: 0;
+    border-top: 1px solid #ebecf0;
+    margin: 8px 0;
+}
