@@ -61,7 +61,7 @@ const LoginForm = ({ onAuthSuccess }) => {
           <input
             type="password"
             name="password"
-            placeholder="Contrasenya"
+            placeholder="Password"
             value={formData.password}
             onChange={handleChange}
             required
