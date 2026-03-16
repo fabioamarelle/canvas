@@ -144,9 +144,33 @@
   font-size: 14px;
   text-align: center;
   transition: color 0.2s;
-  font-weight: 700;
+  font-weight: 500;
+}
+
+.auth-link u {
+  color: var(--auth-primary);
+  font-weight: 600;
+
 }
 
 .auth-link:hover {
   color: var(--auth-primary);
+}
+
+.logout-btn {
+  background-color: #172b4d25;
+  color: #262d3b;
+  border: none;
+  padding: 6px 10px;
+  border-radius: 3px;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  font-family: 'Inter', sans-serif;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.logout-btn:hover {
+  background-color: #172b4d39;
+  transition: background-color 0.2s, color 0.2s;
 }

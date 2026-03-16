@@ -14,9 +14,9 @@
 }
 
 .whiteboard-card:hover {
-  background-color: #0d4184;
+  background-color: #2a538a;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-  transform: translateY(-2px);
+  transform: translateY(-1px);
 }
 
 .whiteboard-title {
@@ -39,6 +39,7 @@
   padding: 4px 8px;
   margin-left: 10px;
   border-radius: 3px;
+  font-weight: 600;
   font-size: 12px;
   cursor: pointer;
   transition: background 0.2s;
@@ -75,13 +76,21 @@
 .create-whiteboard-form h2 {
   font-size: 20px;
   color: #172b4d;
-  margin-bottom: 8px;
+  margin-bottom: 16px;
 }
 
 .create-whiteboard-form p {
   color: #5e6c84;
   margin-bottom: 20px;
   font-size: 14px;
+}
+
+.create-whiteboard-form label {
+  color: #313742;
+  margin-bottom: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  margin-left: 2px;
 }
 
 .create-whiteboard-form input {
@@ -95,6 +104,7 @@
   color: var(--text-dark);
   box-sizing: border-box;
   transition: background 0.2s, border-color 0.2s;
+  outline: none;
 }
 
 .form-actions {

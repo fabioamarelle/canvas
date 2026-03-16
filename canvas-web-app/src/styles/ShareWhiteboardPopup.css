@@ -250,7 +250,7 @@
 }
 
 .share-primary-btn {
-    background-color: rgba(255, 255, 255, 0.2);
+    background-color: #205fbd;
     color: white;
     border: none;
     padding: 8px 16px;
@@ -261,7 +261,7 @@
     transition: background-color 0.2s;
 }
 
-.share-primary-btn:hover:not(:disabled) {
+.share-primary-btn:hover {
     background-color: #0047b3;
 }
 
