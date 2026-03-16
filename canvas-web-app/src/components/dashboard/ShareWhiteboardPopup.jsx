@@ -17,7 +17,7 @@ const ShareWhiteboardPopup = ({ id }) => {
                     const res = await apiClient.get(`/whiteboards/${id}/collaborators`);
                     setCollaborators(res.data);
                 } catch (error) {
-                    console.error("Error carregant col·laboradors", error);
+                    console.error("Error loading collaborators", error);
                 }
             };
             fetchCollaborators();
@@ -30,7 +30,7 @@ const ShareWhiteboardPopup = ({ id }) => {
         e.stopPropagation();
         const link = `${window.location.origin}/whiteboard/${id}`;
         navigator.clipboard.writeText(link);
-        setMessage('Enllaç copiat al porta-retalls.');
+        setMessage('Link copied to clipboard.');
         setTimeout(() => setMessage(''), 3000);
     };
 
@@ -48,10 +48,10 @@ const ShareWhiteboardPopup = ({ id }) => {
             
             setCollaborators([...collaborators, res.data]);
             setFormData({ email: '', role: 'VIEWER' });
-            setMessage('Usuari afegit amb èxit!');
+            setMessage('Added user successfully!');
             setTimeout(() => setMessage(''), 3000);
         } catch (error) {
-            setMessage(error.response?.data?.message || "Error en afegir l'usuari.");
+            setMessage(error.response?.data?.message || "Error adding collaborator.");
         } finally {
             setIsLoading(false);
         }
@@ -67,8 +67,8 @@ const ShareWhiteboardPopup = ({ id }) => {
                 setCollaborators(prev => prev.map(c => c.id === userId ? { ...c, role: newRole } : c));
             }
         } catch (error) {
-            console.error("Error actualitzant permisos", error);
-            setMessage("Error en actualitzar els permisos.");
+            console.error("Error updating permissions", error);
+            setMessage("Error updating permissions.");
             setTimeout(() => setMessage(''), 3000);
         }
     };
@@ -81,7 +81,7 @@ const ShareWhiteboardPopup = ({ id }) => {
             <div className="share-modal-content" onClick={(e) => e.stopPropagation()}>
                 
                 <div className="share-modal-header">
-                    <h2>Compartir Pissarra</h2>
+                    <h2>Share Whiteboard</h2>
                     <button className="share-close-btn" onClick={() => setIsOpen(false)}>✕</button>
                 </div>
 
@@ -90,25 +90,25 @@ const ShareWhiteboardPopup = ({ id }) => {
                         <input
                             type="email"
                             name="email"
-                            placeholder="Afegeix usuaris (correu)"
+                            placeholder="Invite users (email)"
                             value={formData.email}
                             onChange={handleChange}
                             autoFocus
                         />
                         <select name="role" value={formData.role} onChange={handleChange}>
-                            <option value="VIEWER">Lector</option>
+                            <option value="VIEWER">Viewer</option>
                             <option value="EDITOR">Editor</option>
                         </select>
                     </div>
                     {formData.email && (
                         <button type="submit" className="share-primary-btn" disabled={isLoading}>
-                            {isLoading ? 'Enviant...' : 'Convida'}
+                            {isLoading ? 'Sharing...' : 'Share'}
                         </button>
                     )}
                 </form>
 
                 <div className="share-collab-list">
-                    <h3>Persones amb accés</h3>
+                    <h3>Collaborators</h3>
                     {collaborators.map(user => (
                         <div key={user.id} className="share-collab-item">
                             <div className="share-collab-info">
@@ -122,16 +122,16 @@ const ShareWhiteboardPopup = ({ id }) => {
                             </div>
                             
                             {user.role === 'OWNER' ? (
-                                <span className="share-owner-label">Propietari</span>
+                                <span className="share-owner-label">Owner</span>
                             ) : (
                                 <select 
                                     className="share-role-selector"
                                     value={user.role} 
                                     onChange={(e) => handleUpdateRole(user.id, e.target.value)}
                                 >
-                                    <option value="VIEWER">Lector</option>
+                                    <option value="VIEWER">Viewer</option>
                                     <option value="EDITOR">Editor</option>
-                                    <option value="REMOVE" className="share-danger-option">Eliminar accés</option>
+                                    <option value="REMOVE" className="share-danger-option">Remove</option>
                                 </select>
                             )}
                         </div>
@@ -142,10 +142,10 @@ const ShareWhiteboardPopup = ({ id }) => {
 
                 <div className="share-modal-footer">
                     <button className="share-secondary-btn" onClick={handleCopyLink} type="button">
-                        Copiar enllaç
+                        Copy link
                     </button>
                     <button className="share-primary-btn" onClick={(e) => { e.stopPropagation(); setIsOpen(false); }} type="button">
-                        Fet
+                        Done
                     </button>
                 </div>
             </div>
@@ -158,7 +158,7 @@ const ShareWhiteboardPopup = ({ id }) => {
                 className="share-trigger-btn" 
                 onClick={(e) => { e.stopPropagation(); setIsOpen(true); }}
             >
-                Compartir
+                Share
             </button>
 
             {isOpen && createPortal(modalContent, document.body)}

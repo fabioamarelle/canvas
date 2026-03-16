@@ -32,7 +32,7 @@ const LoginForm = ({ onAuthSuccess }) => {
       if (error.response && error.response.data) {
         setMessage(error.response.data.message);
       } else {
-        setMessage("No s'ha pogut connectar amb el servidor.");
+        setMessage("Error connecting to server.");
       }
     }
   };
@@ -46,12 +46,12 @@ const LoginForm = ({ onAuthSuccess }) => {
         </div>
 
         <form className="auth-form" onSubmit={handleSubmit}>
-          <h2>Inicia sessió</h2>
+          <h2>Log in</h2>
 
           <input
             type="email"
             name="email"
-            placeholder="Correu electrònic"
+            placeholder="Email"
             value={formData.email}
             onChange={handleChange}
             required
@@ -68,7 +68,7 @@ const LoginForm = ({ onAuthSuccess }) => {
             autoComplete="current-password"
           />
 
-          <button type="submit">Iniciar sessió</button>
+          <button type="submit">Log in</button>
 
           {message && (
             <div className="status-message">
@@ -77,7 +77,7 @@ const LoginForm = ({ onAuthSuccess }) => {
           )}
 
           <Link to="/register" className="auth-link">
-            No tens compte? Registra't
+            Don't have an account yet? <u>Register</u>
           </Link>
         </form>
       </div>

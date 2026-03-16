@@ -8,5 +8,15 @@ export default function Avatar({ id }) {
         getGravatarUrl(id).then(setUrl);
     }, [id]);
 
-    return url ? <img src={url} alt="Avatar" style={{ borderRadius: '50%', width: '40px', filter: 'saturate(0.2) opacity(0.85) contrast(0.9)', backgroundColor: '#f4f5f7' }} /> : null;
+    return url ? 
+        <img
+            src={url}
+            alt="Avatar" 
+            style={{ 
+                borderRadius: '50%',
+                width: '40px',
+                filter: 'saturate(0.2) opacity(0.85) contrast(0.9)',
+                backgroundColor: '#f4f5f7'
+            }} /> 
+        : null;
 }

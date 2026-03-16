@@ -25,7 +25,7 @@ function WhiteboardEditorView() {
         const response = await apiClient.get('/users/' + localStorage.getItem('userId'));
         setUserData(response.data);
       } catch (error) {
-        console.error("Error carregant l'usuari:", error);
+        console.error("Error loading user:", error);
       }
     };
     fetchUser();
@@ -54,7 +54,7 @@ function WhiteboardEditorView() {
             setUserRole('VIEWER');
         }
     } catch (error) {
-        console.error("Error carregant el rol:", error);
+        console.error("Error loading user permissions:", error);
     }
   }
 
@@ -77,7 +77,7 @@ function WhiteboardEditorView() {
         <button className="back-button" onClick={() => window.history.back()}>
           <span style={{ fontSize: '15px' }}>↩</span> 
         </button>
-        <h2>{boardInfo?.name || "Untitled Board"} {!canEdit && <span style={{fontSize:'12px', color:'#666', marginLeft:'10px'}}>(Només Lectura)</span>}</h2>
+        <h2>{boardInfo?.name || "Whiteboard"} {!canEdit && <span style={{fontSize:'12px', color:'#666', marginLeft:'10px'}}>(Read-only)</span>}</h2>
       </header>
       
       {canEdit && (

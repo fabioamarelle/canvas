@@ -38,7 +38,7 @@ const CreateWhiteboardPopup = ({ onSuccess }) => {
             if (error.response && error.response.data) {
                 setMessage(error.response.data.message);
             } else {
-                setMessage("No s'ha pogut connectar amb el servidor.");
+                setMessage("Error connecting to server.");
             }
         }
     };
@@ -46,7 +46,7 @@ const CreateWhiteboardPopup = ({ onSuccess }) => {
     return (
         <>
             <div className="create-board-trigger" onClick={() => setIsOpen(true)}>
-                <span>+ Crear nova pissarra</span>
+                <span>+ New whiteboard</span>
             </div>
 
             {isOpen && (
@@ -55,12 +55,14 @@ const CreateWhiteboardPopup = ({ onSuccess }) => {
                         className="create-whiteboard-form"
                         onSubmit={handleSubmit}
                         onClick={(e) => e.stopPropagation()}
+                        autocomplete="off"
                     >
-                        <h2>Crea la teva pissarra</h2>
+                        <h2>Create whiteboard</h2>
 
+                        <label>Name</label>
                         <input
                             name="name"
-                            placeholder="Nom de la pissarra"
+                            placeholder="Whiteboard name"
                             value={formData.name}
                             onChange={handleChange}
                             autoFocus
@@ -68,8 +70,8 @@ const CreateWhiteboardPopup = ({ onSuccess }) => {
                         />
 
                         <div className="form-actions">
-                            <button type="submit" className="confirm-btn">Crear</button>
-                            <button type="button" className="cancel-btn" onClick={() => setIsOpen(false)}>Cancel·lar</button>
+                            <button type="submit" className="confirm-btn">Create</button>
+                            <button type="button" className="cancel-btn" onClick={() => setIsOpen(false)}>Cancel</button>
                         </div>
 
                         {message && <p className="status-message">{message}</p>}

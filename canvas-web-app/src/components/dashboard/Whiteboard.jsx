@@ -11,7 +11,7 @@ const Whiteboard = ({ id, name, onDelete }) => {
 
   const handleDeleteClick = (e) => {
     e.stopPropagation();
-    if (window.confirm(`Vols esborrar la pissarra "${name}"?`)) {
+    if (window.confirm(`Do you want to delete "${name}"?`)) {
       onDelete(id);
     }
   };
@@ -19,13 +19,13 @@ const Whiteboard = ({ id, name, onDelete }) => {
   return (
     <div className="whiteboard-card" onClick={handleCardClick}>
       <div className="whiteboard-card-header">
-        <h3 className="whiteboard-title">{name ? name : "Pissarra sense nom"}</h3>
+        <h3 className="whiteboard-title">{name ? name : "Whiteboard"}</h3>
       </div>
       <div className="whiteboard-card-footer">
         <ShareWhiteboardPopup id={id}/>
 
         <button className="delete-btn" onClick={handleDeleteClick}>
-          Esborrar
+          Delete
         </button>
       </div>
     </div>

@@ -13,7 +13,7 @@ const UserProfilePopup = ({ onClose }) => {
         const response = await apiClient.get('/users/' + localStorage.getItem('userId'));
         setUserData(response.data);
       } catch (error) {
-        console.error("Error carregant l'usuari:", error);
+        console.error("Error loading user:", error);
       } finally {
         setLoading(false);
       }
@@ -22,7 +22,7 @@ const UserProfilePopup = ({ onClose }) => {
     fetchUser();
   }, []);
 
-  if (loading) return <div className="profile-popup">Carregant...</div>;
+  if (loading) return <div className="profile-popup">Loading...</div>;
   if (!userData) return null;
 
   return (
@@ -30,7 +30,7 @@ const UserProfilePopup = ({ onClose }) => {
       <div className="profile-popup" onClick={""}>
         <div className="popup-header">
           <button className="close-popup" onClick={onClose}>x</button>
-          <span>Compte</span>
+          <span>Account</span>
         </div>
 
         <div className="popup-content">
@@ -42,10 +42,8 @@ const UserProfilePopup = ({ onClose }) => {
             </div>
           </div>
 
-          <hr />
-
           <ul className="popup-menu">
-            <li>Configuració</li>
+             
           </ul>
 
           <hr />

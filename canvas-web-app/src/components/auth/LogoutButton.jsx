@@ -6,7 +6,7 @@ const LogoutButton = () => {
 
   return (
     <button className="logout-btn" onClick={logout}>
-      Tancar sessió
+      Log out
     </button>
   );
 };
