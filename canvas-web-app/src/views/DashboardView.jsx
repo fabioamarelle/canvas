@@ -61,7 +61,7 @@ function DashboardView() {
       </header>
 
       <main className="dashboard-main">
-        <h2>Les meves pissarres</h2>
+        <h2>My whiteboards</h2>
         <div className="whiteboard-grid">
           <div className="create-card-wrapper">
             <CreateWhiteboardPopup onSuccess={() => getWhiteboards()} />
@@ -78,7 +78,7 @@ function DashboardView() {
             ))
           ) : (
             <div className="empty-state">
-              <p>Encara no tens cap pissarra. Crea la primera!</p>
+              <p>You don't have any whiteboards.</p>
             </div>
           )}
         </div>
