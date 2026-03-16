@@ -1,4 +1,4 @@
-package com.canvas.mobile;
+package com.canvas.mobile.utilities;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -8,7 +8,7 @@ import java.net.URL;
 public class Whiteboard {
     public static String getWhiteboard(String id) {
         try {
-            String urlString = "localhost:8080/api/whiteboards/" + id;
+            String urlString = "https://api-canvas.fabioamarelle.com/api/whiteboards/" + id;
 
             URL url = new URL(urlString);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
