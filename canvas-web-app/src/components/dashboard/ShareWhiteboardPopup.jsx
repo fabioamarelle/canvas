@@ -16,9 +16,7 @@ const ShareWhiteboardPopup = ({ id }) => {
                 try {
                     const res = await apiClient.get(`/whiteboards/${id}/collaborators`);
                     setCollaborators(res.data);
-                } catch (error) {
-                    console.error("Error loading collaborators", error);
-                }
+                } catch (error) {}
             };
             fetchCollaborators();
         }
@@ -67,7 +65,6 @@ const ShareWhiteboardPopup = ({ id }) => {
                 setCollaborators(prev => prev.map(c => c.id === userId ? { ...c, role: newRole } : c));
             }
         } catch (error) {
-            console.error("Error updating permissions", error);
             setMessage("Error updating permissions.");
             setTimeout(() => setMessage(''), 3000);
         }

@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import apiClient from '../services/api/apiClient';
 import Canvas from '../components/whiteboard/Canvas';
+import ShareWhiteboardPopup from '../components/dashboard/ShareWhiteboardPopup';
 import '../styles/WhiteboardEditor.css';
 
 function WhiteboardEditorView() {
-  const { id } = useParams(); 
+  const { id } = useParams();
+  const navigate = useNavigate();
   const [boardInfo, setBoardInfo] = useState(null);
-  const [selectedElement, setSelectedElement] = useState(null);
   const [userData, setUserData] = useState(null);
-  
   const [userRole, setUserRole] = useState('VIEWER');
 
   useEffect(() => {
@@ -24,9 +24,7 @@ function WhiteboardEditorView() {
       try {
         const response = await apiClient.get('/users/' + localStorage.getItem('userId'));
         setUserData(response.data);
-      } catch (error) {
-        console.error("Error loading user:", error);
-      }
+      } catch (error) {}
     };
     fetchUser();
   }, []);
@@ -35,71 +33,51 @@ function WhiteboardEditorView() {
     try {
       const response = await apiClient.get(`/whiteboards/${boardId}`);
       setBoardInfo(response.data);
-    } catch (error) {
-      console.error("Error loading whiteboard info:", error);
-    }
+    } catch (error) {}
   }
 
   async function getUserRole(boardId) {
     try {
-        const currentUserId = localStorage.getItem('userId');
-        const res = await apiClient.get(`/whiteboards/${boardId}/collaborators`);
-        
-        const me = res.data.find(collab => collab.id === currentUserId);
-        
-        if (me) {
-            const myRole = me.permissionType || me.role; 
-            setUserRole(myRole); 
-        } else {
-            setUserRole('VIEWER');
-        }
-    } catch (error) {
-        console.error("Error loading user permissions:", error);
-    }
+      const currentUserId = localStorage.getItem('userId');
+      const response = await apiClient.get(`/whiteboards/${boardId}/collaborators`);
+      const user = response.data.find(collab => collab.id === currentUserId);
+      
+      if (user) {
+        setUserRole(user.permissionType);
+      } else {
+        setUserRole('VIEWER');
+      }
+    } catch (error) {}
   }
 
   const isOwnerFallback = boardInfo && boardInfo.ownerId === localStorage.getItem('userId');
-  
-
-  const handleToolClick = (tool) => {
-    if (selectedElement === tool) {
-      setSelectedElement(null);
-    } else {
-      setSelectedElement(tool);
-    }
-  };
-
   const canEdit = userRole === 'OWNER' || userRole === 'EDITOR' || isOwnerFallback;
 
   return (
     <div className="editor-container">
       <header className="editor-header">
-        <button className="back-button" onClick={() => window.history.back()}>
-          <span style={{ fontSize: '15px' }}>↩</span> 
-        </button>
-        <h2>{boardInfo?.name || "Whiteboard"} {!canEdit && <span style={{fontSize:'12px', color:'#666', marginLeft:'10px'}}>(Read-only)</span>}</h2>
+        <div className="header-left">
+          <button className="back-button" onClick={() => navigate(-1)}>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <line x1="19" y1="12" x2="5" y2="12"></line>
+              <polyline points="12 19 5 12 12 5"></polyline>
+            </svg>
+          </button>
+          <h2 className="board-title">
+            <span className="board-title-text">{boardInfo?.name || "Whiteboard"}</span>
+            {!canEdit && <span className="read-only-badge">Read-only</span>}
+          </h2>
+        </div>
+        <div className="header-right">
+          {canEdit && <ShareWhiteboardPopup id={id} />}
+        </div>
       </header>
       
-      {canEdit && (
-        <div className='toolbar'>
-          {['Text', 'Image', 'Note', 'Drawing', 'Eraser'].map((type) => (
-            <button 
-              key={type}
-              onClick={() => handleToolClick(type)}
-              className={`element-button ${selectedElement === type ? "active" : "inactive"}`}
-              title={selectedElement === type ? "Click to deselect" : `Select ${type}`}
-            >
-              {type}
-            </button>
-          ))}
-        </div> 
-      )}
-
       <main className="canvas-area">
         <Canvas 
-            activeTool={canEdit ? selectedElement : null} 
-            userName={userData ? `@${userData.username}` : '@usuari'} 
-            readOnly={!canEdit} 
+          canEdit={canEdit}
+          userName={userData ? `@${userData.username}` : '@usuari'} 
+          readOnly={!canEdit} 
         />
       </main>
     </div>

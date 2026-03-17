@@ -11,6 +11,22 @@
     transition: background-color 0.2s, color 0.2s;
 }
 
+.editor-header .share-trigger-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background-color: #C2E7FF;
+  color: #001D35;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 24px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s, box-shadow 0.2s;
+}
+
 .share-trigger-btn:hover {
     background-color: rgba(255, 255, 255, 0.405);
 }
