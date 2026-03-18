@@ -57,7 +57,7 @@ const RegisterForm = ({ onAuthSuccess }) => {
             value={formData.username}
             onChange={handleChange}
             required
-            autoComplete="username"
+            autoComplete="off"
           />
 
           <input

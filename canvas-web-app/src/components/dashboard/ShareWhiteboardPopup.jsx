@@ -8,6 +8,7 @@ const ShareWhiteboardPopup = ({ id, currentUserRole }) => {
     const [isLoading, setIsLoading] = useState(false);
     const [formData, setFormData] = useState({ email: '', role: 'VIEWER' });
     const [message, setMessage] = useState('');
+    const [owner, setOwner] = useState({});
     const [collaborators, setCollaborators] = useState([]);
 
     const canInvite = currentUserRole === 'OWNER' || currentUserRole === 'EDITOR';
@@ -21,7 +22,14 @@ const ShareWhiteboardPopup = ({ id, currentUserRole }) => {
                     setCollaborators(res.data);
                 } catch (error) {}
             };
+            const getWhiteboardOwner = async () => {
+                try {
+                    const res = await apiClient.get(`/whiteboards/${id}/owner`);
+                    setOwner(res.data);
+                } catch (error) {}
+            };
             fetchCollaborators();
+            getWhiteboardOwner();
         }
     }, [isOpen, id]);
 
@@ -123,6 +131,19 @@ const ShareWhiteboardPopup = ({ id, currentUserRole }) => {
                         )}
 
                         <div className="share-collab-list">
+                            <h3>Owner</h3>
+                            <div className="share-collab-item">
+                                <div className="share-collab-info">
+                                <div className="share-avatar">
+                                {owner.username ? owner.username.charAt(0).toUpperCase() : '?'}
+                            </div>
+                                <div className="share-details">
+                                    <span className="share-name">{'@'+owner.username || 'Unknown Owner'}</span>
+                                    <span className="share-email">{owner.email}</span>
+                                </div>
+                            </div>
+                            </div>
+
                             <h3>Collaborators</h3>
                             {collaborators.map(user => {
                                 const displayRole = (user.permissionType || 'VIEWER').toUpperCase();
@@ -134,7 +155,7 @@ const ShareWhiteboardPopup = ({ id, currentUserRole }) => {
                                                 {user.name ? user.name.charAt(0).toUpperCase() : '?'}
                                             </div>
                                             <div className="share-details">
-                                                <span className="share-name">{user.name || 'Unknown User'}</span>
+                                                <span className="share-name">{'@'+user.name || 'Unknown User'}</span>
                                                 <span className="share-email">{user.email}</span>
                                             </div>
                                         </div>
