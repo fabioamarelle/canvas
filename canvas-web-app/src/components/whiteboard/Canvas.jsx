@@ -6,9 +6,9 @@ import '../../styles/Canvas.css';
 const HANDLE_SIZE = 8;
 const LINE_HEIGHT_RATIO = 1.2;
 const PADDING = 10;
-const ZOOM_SENSITIVITY = 0.01;
-const MIN_ZOOM = 0.1;
-const MAX_ZOOM = 5;
+const ZOOM_SENSITIVITY = 0.002;
+const MIN_ZOOM = 0.3;
+const MAX_ZOOM = 2;
 const NOTE_COLORS = ['#ffe492', '#a2cff7', '#bef09f', '#f1bc9d', '#a9a9f5'];
 
 const isPointInRect = (px, py, x, y, w, h) => px >= x && px <= x + w && py >= y && py <= y + h;
