@@ -27,7 +27,7 @@ const UserProfilePopup = ({ onClose }) => {
 
   return (
     <div className='profile-popup-overlay' onClick={onClose}>
-      <div className="profile-popup" onClick={""}>
+      <div className="profile-popup">
         <div className="popup-header">
           <button className="close-popup" onClick={onClose}>x</button>
           <span>Account</span>

@@ -432,19 +432,26 @@ const Canvas = ({ userName = "Usuari", readOnly = false }) => {
   };
 
   const handleMouseUp = () => {
-    if (interactionState === 'WRITING' || readOnly) return;
-    if (['DRAWING', 'MOVING', 'RESIZING', 'ERASING'].includes(interactionState)) {
+    if (interactionState === 'WRITING') return;
+
+    if (!readOnly && ['DRAWING', 'MOVING', 'RESIZING', 'ERASING'].includes(interactionState)) {
       const el = elements.find(e => e.id === selectedElementId) || elements[elements.length - 1];
-      if (interactionState === 'DRAWING' && el) broadcastChange('CREATE', { element: el });
-      else if (interactionState === 'ERASING') {
+      
+      if (interactionState === 'DRAWING' && el) {
+        broadcastChange('CREATE', { element: el });
+      } else if (interactionState === 'ERASING') {
         Array.from(pendingDeletions).forEach(modId => {
           const modEl = elements.find(e => e.id === modId);
           if (modEl) broadcastChange('UPDATE', { element: modEl });
         });
         setPendingDeletions(new Set());
-      } else if (el?.id) broadcastChange('UPDATE', { element: el });
+      } else if (el?.id) {
+        broadcastChange('UPDATE', { element: el });
+      }
     }
-    setInteractionState('IDLE'); setResizeHandle(null);
+    
+    setInteractionState('IDLE'); 
+    setResizeHandle(null);
   };
 
   const handleDoubleClick = (e) => {
