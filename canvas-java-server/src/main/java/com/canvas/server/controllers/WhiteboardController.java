@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.canvas.server.models.User;
 import com.canvas.server.models.Whiteboard;
+import com.canvas.server.utilities.dao.UserDAO;
 import com.canvas.server.utilities.dao.WhiteboardDAO;
 
 @RestController
@@ -42,6 +44,14 @@ public class WhiteboardController {
     public Whiteboard getWhiteboard(@PathVariable String id) {
         UUID whiteboardId = UUID.fromString(id);
         return WhiteboardDAO.getWhiteboard(whiteboardId);
+    }
+
+    @GetMapping("/{id}/owner")
+    public User getWhiteboardOwner(@PathVariable String id) {
+        UUID whiteboardId = UUID.fromString(id);
+        
+        return UserDAO.getUserById(
+            WhiteboardDAO.getWhiteboard(whiteboardId).getOwnerId());
     }
 }
 
