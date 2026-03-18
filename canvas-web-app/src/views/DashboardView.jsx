@@ -8,36 +8,47 @@ import apiClient from '../services/api/apiClient';
 import { useEffect, useState } from 'react';
 import Avatar from '../components/Avatar';
 import { Link } from 'react-router-dom';
+
 function DashboardView() {
-
   const [isProfileOpen, setIsProfileOpen] = useState(false);
-
   const [whiteboards, setWhiteboards] = useState([]);
+  
+  const currentUserId = localStorage.getItem('userId');
 
-  async function deleteWhiteboard(id) {
-    try {
-      await apiClient.delete('/whiteboards/' + id)
-        .then(response => setWhiteboards(response.data));
-
-      await getWhiteboards();
-
-    } catch (error) {
-      console.log(error)
-    }
-  };
 
   async function getWhiteboards() {
-
     try {
-      await apiClient.get('/users/' + localStorage.getItem('userId') + '/whiteboards')
-        .then(response => setWhiteboards(response.data));
+      const response = await apiClient.get('/users/' + currentUserId + '/whiteboards');
+      const whiteboards = response.data;
+      if (!whiteboards) { 
+        setWhiteboards(whiteboards);
+        return;
+      }
+      const whiteboardsPermissions = await Promise.all(whiteboards.map(async (board) => {
+        if (String(board.ownerId) === String(currentUserId)) {
+          return { ...board, userRole: 'OWNER' };
+        }
 
+        try {
+          const collabRes = await apiClient.get(`/whiteboards/${board.id}/collaborators`);
+          const currentUserCollab = collabRes.data.find(c => c.id === currentUserId);
+          
+          const role = currentUserCollab ? (currentUserCollab.permissionType || 'VIEWER').toUpperCase() : 'VIEWER';
+          
+          return { ...board, userRole: role };
+        } catch (error) {
+          return { ...board, userRole: 'VIEWER' };
+        }
+      }));
+      setWhiteboards(whiteboardsPermissions);
     } catch (error) {
-      console.log(error)
+      console.error(error);
     }
-  };
+  }
 
-  useEffect(() => { getWhiteboards(); }, []);
+  useEffect(() => { 
+    getWhiteboards(); 
+  }, [currentUserId]);
 
   return (
     <div className="dashboard-layout">
@@ -49,7 +60,7 @@ function DashboardView() {
         </div>
         <div className="header-right" style={{ position: 'relative' }}>
           <div className="avatar-trigger" onClick={() => setIsProfileOpen(!isProfileOpen)}>
-            <Avatar id={localStorage.getItem('userId')} />
+            <Avatar id={currentUserId} />
           </div>
 
           {isProfileOpen && (
@@ -73,7 +84,8 @@ function DashboardView() {
                 key={whiteboard.id}
                 id={whiteboard.id}
                 name={whiteboard.name}
-                onDelete={deleteWhiteboard}
+                onDelete={() => getWhiteboards()}
+                userRole={whiteboard.userRole} 
               />
             ))
           ) : (
@@ -87,4 +99,4 @@ function DashboardView() {
   );
 }
 
-export default DashboardView
+export default DashboardView;

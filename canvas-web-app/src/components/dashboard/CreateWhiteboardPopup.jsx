@@ -55,7 +55,7 @@ const CreateWhiteboardPopup = ({ onSuccess }) => {
                         className="create-whiteboard-form"
                         onSubmit={handleSubmit}
                         onClick={(e) => e.stopPropagation()}
-                        autocomplete="off"
+                        autoComplete="off"
                     >
                         <h2>Create whiteboard</h2>
 
