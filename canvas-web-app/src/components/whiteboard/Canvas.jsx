@@ -6,9 +6,9 @@ import '../../styles/Canvas.css';
 const HANDLE_SIZE = 8;
 const LINE_HEIGHT_RATIO = 1.2;
 const PADDING = 10;
-const ZOOM_SENSITIVITY = 0.01;
-const MIN_ZOOM = 0.1;
-const MAX_ZOOM = 5;
+const ZOOM_SENSITIVITY = 0.002;
+const MIN_ZOOM = 0.3;
+const MAX_ZOOM = 2;
 const NOTE_COLORS = ['#ffe492', '#a2cff7', '#bef09f', '#f1bc9d', '#a9a9f5'];
 
 const isPointInRect = (px, py, x, y, w, h) => px >= x && px <= x + w && py >= y && py <= y + h;
@@ -432,19 +432,26 @@ const Canvas = ({ userName = "Usuari", readOnly = false }) => {
   };
 
   const handleMouseUp = () => {
-    if (interactionState === 'WRITING' || readOnly) return;
-    if (['DRAWING', 'MOVING', 'RESIZING', 'ERASING'].includes(interactionState)) {
+    if (interactionState === 'WRITING') return;
+
+    if (!readOnly && ['DRAWING', 'MOVING', 'RESIZING', 'ERASING'].includes(interactionState)) {
       const el = elements.find(e => e.id === selectedElementId) || elements[elements.length - 1];
-      if (interactionState === 'DRAWING' && el) broadcastChange('CREATE', { element: el });
-      else if (interactionState === 'ERASING') {
+      
+      if (interactionState === 'DRAWING' && el) {
+        broadcastChange('CREATE', { element: el });
+      } else if (interactionState === 'ERASING') {
         Array.from(pendingDeletions).forEach(modId => {
           const modEl = elements.find(e => e.id === modId);
           if (modEl) broadcastChange('UPDATE', { element: modEl });
         });
         setPendingDeletions(new Set());
-      } else if (el?.id) broadcastChange('UPDATE', { element: el });
+      } else if (el?.id) {
+        broadcastChange('UPDATE', { element: el });
+      }
     }
-    setInteractionState('IDLE'); setResizeHandle(null);
+    
+    setInteractionState('IDLE'); 
+    setResizeHandle(null);
   };
 
   const handleDoubleClick = (e) => {

@@ -8,9 +8,12 @@ import '../styles/WhiteboardEditor.css';
 function WhiteboardEditorView() {
   const { id } = useParams();
   const navigate = useNavigate();
+  
+  const currentUserId = localStorage.getItem('userId');
+
   const [boardInfo, setBoardInfo] = useState(null);
   const [userData, setUserData] = useState(null);
-  const [userRole, setUserRole] = useState('VIEWER');
+  const [userRole, setUserRole] = useState('VIEWER'); 
 
   useEffect(() => {
     if (id) {
@@ -21,37 +24,45 @@ function WhiteboardEditorView() {
 
   useEffect(() => {
     const fetchUser = async () => {
+      if (!currentUserId) return;
+      
       try {
-        const response = await apiClient.get('/users/' + localStorage.getItem('userId'));
+        const response = await apiClient.get(`/users/${currentUserId}`);
         setUserData(response.data);
-      } catch (error) {}
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+      }
     };
     fetchUser();
-  }, []);
+  }, [currentUserId]);
 
   async function getWhiteboardData(boardId) {
     try {
       const response = await apiClient.get(`/whiteboards/${boardId}`);
       setBoardInfo(response.data);
-    } catch (error) {}
+    } catch (error) {
+      console.error("Error fetching whiteboard data:", error);
+    }
   }
 
   async function getUserRole(boardId) {
     try {
-      const currentUserId = localStorage.getItem('userId');
       const response = await apiClient.get(`/whiteboards/${boardId}/collaborators`);
-      const user = response.data.find(collab => collab.id === currentUserId);
+      const user = response.data.find(collab => collab.id == currentUserId);
       
-      if (user) {
-        setUserRole(user.permissionType);
-      } else {
-        setUserRole('VIEWER');
+      if (user && user.permissionType) {
+        setUserRole(user.permissionType.toUpperCase()); 
       }
-    } catch (error) {}
+    } catch (error) {
+      console.error("Error fetching role:", error);
+      setUserRole('VIEWER');
+    }
   }
 
-  const isOwnerFallback = boardInfo && boardInfo.ownerId === localStorage.getItem('userId');
-  const canEdit = userRole === 'OWNER' || userRole === 'EDITOR' || isOwnerFallback;
+  const isOwner = boardInfo ? boardInfo.ownerId == currentUserId : false;
+  
+  const role = isOwner ? 'OWNER' : userRole;
+  const canEdit = role === 'OWNER' || role === 'EDITOR';
 
   return (
     <div className="editor-container">
@@ -69,7 +80,12 @@ function WhiteboardEditorView() {
           </h2>
         </div>
         <div className="header-right">
-          {canEdit && <ShareWhiteboardPopup id={id} />}
+          {canEdit && 
+            <ShareWhiteboardPopup 
+              id={id}
+              currentUserRole={role}
+            />
+          }
         </div>
       </header>
       
