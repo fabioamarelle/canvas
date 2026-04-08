@@ -17,7 +17,7 @@ export default function App() {
       <Routes>
         <Route path="/login" element={session ? <Navigate to="/dashboard" /> : <LoginView onAuthSuccess={handleAuthChange} />} />
         <Route path="/register" element={session ? <Navigate to="/dashboard" /> : <RegisterView onAuthSuccess={handleAuthChange} />} />
-        <Route path="/whiteboard/:id" element={session ?  <WhiteboardEditorView /> : <Navigate to="/login" />} />
+        <Route path="/whiteboard/:id" element={<WhiteboardEditorView />} />
 
         <Route
           path="/dashboard"

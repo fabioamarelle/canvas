@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, useSearchParams } from "react-router-dom";
 import apiClient from '../services/api/apiClient';
 import Canvas from '../components/whiteboard/Canvas';
 import ShareWhiteboardPopup from '../components/dashboard/ShareWhiteboardPopup';
@@ -8,19 +8,27 @@ import '../styles/WhiteboardEditor.css';
 function WhiteboardEditorView() {
   const { id } = useParams();
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+
+  let currentUserId = localStorage.getItem('userId');
   
-  const currentUserId = localStorage.getItem('userId');
+  if (!currentUserId) {
+    currentUserId = searchParams.get("id");
+    if (currentUserId) {
+      localStorage.setItem('userId', currentUserId);
+    }
+  }
 
   const [boardInfo, setBoardInfo] = useState(null);
   const [userData, setUserData] = useState(null);
-  const [userRole, setUserRole] = useState('VIEWER'); 
+  const [userRole, setUserRole] = useState('VIEWER');
 
   useEffect(() => {
     if (id) {
       getWhiteboardData(id);
       getUserRole(id);
     }
-  }, [id]);
+  }, [id, currentUserId]);
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -46,6 +54,8 @@ function WhiteboardEditorView() {
   }
 
   async function getUserRole(boardId) {
+    if (!currentUserId) return; // Guard clause
+    
     try {
       const response = await apiClient.get(`/whiteboards/${boardId}/collaborators`);
       const user = response.data.find(collab => collab.id == currentUserId);
@@ -60,7 +70,6 @@ function WhiteboardEditorView() {
   }
 
   const isOwner = boardInfo ? boardInfo.ownerId == currentUserId : false;
-  
   const role = isOwner ? 'OWNER' : userRole;
   const canEdit = role === 'OWNER' || role === 'EDITOR';
 
