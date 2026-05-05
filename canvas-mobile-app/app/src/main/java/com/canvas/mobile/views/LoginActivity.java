@@ -21,14 +21,26 @@ public class LoginActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        // Loads language preferences
+        android.content.SharedPreferences langPrefs = getSharedPreferences("Settings", MODE_PRIVATE);
+        String language = langPrefs.getString("My_Lang", "en");
+        java.util.Locale locale = new java.util.Locale(language);
+        java.util.Locale.setDefault(locale);
+        android.content.res.Configuration config = new android.content.res.Configuration();
+        config.setLocale(locale);
+        getResources().updateConfiguration(config, getResources().getDisplayMetrics());
+
         super.onCreate(savedInstanceState);
 
+        // Gets currently logged in user, if exists
         SharedPreferences prefs = getSharedPreferences("PREFERENCES", MODE_PRIVATE);
         String currentUserId = prefs.getString("user_id", null);
 
+        // If there is an user logged in, skip login screen
         if (currentUserId != null) {
             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
             startActivity(intent);
+            overridePendingTransition(R.anim.nav_enter_slide_up, R.anim.nav_exit_fade_out);
             finish();
             return;
         }
@@ -51,9 +63,11 @@ public class LoginActivity extends AppCompatActivity {
             String email = loginActivityEmailField.getText().toString();
             String pass = loginActivityPasswordField.getText().toString();
 
+            // Call login helper method
             AuthHelper.login(email, pass, new AuthHelper.AuthCallback() {
                 @Override
                 public void onSuccess(User user) {
+                    // If login is successful, save information to preferences, move onto dashboard
                     SharedPreferences prefs = getSharedPreferences("PREFERENCES", MODE_PRIVATE);
                     prefs.edit()
                             .putString("user_id", user.getId().toString())
@@ -62,19 +76,23 @@ public class LoginActivity extends AppCompatActivity {
 
                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                     startActivity(intent);
+                    LoginActivity.this.overridePendingTransition(R.anim.nav_enter_slide_up, R.anim.nav_exit_fade_out);
                     finish();
                 }
 
                 @Override
                 public void onError(String error) {
+                    // If login is not successful, show error message
                     android.widget.Toast.makeText(LoginActivity.this,
-                            "Error: " + error, android.widget.Toast.LENGTH_SHORT).show();
+                            getString(R.string.error_prefix) + " " + error, android.widget.Toast.LENGTH_SHORT).show();
                 }
             });
         });
 
         loginActivityRegisterButton.setOnClickListener(v -> {
+            // Moves to register screen
             startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
+            overridePendingTransition(R.anim.nav_enter_slide_up, R.anim.nav_exit_fade_out);
             finish();
         });
     }

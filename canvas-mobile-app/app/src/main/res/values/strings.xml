@@ -1,3 +1,77 @@
 <resources>
     <string name="app_name">Canvas</string>
+    <string name="error_prefix">Error:</string>
+    <string name="error_network_prefix">Network error:</string>
+    <string name="btn_cancel">Cancel</string>
+    <string name="btn_remove">Remove</string>
+    <string name="btn_delete">Delete</string>
+    <string name="btn_back">Back</string>
+    <string name="btn_confirm">Confirm</string>
+
+    <string-array name="share_roles">
+        <item>VIEWER</item>
+        <item>EDITOR</item>
+    </string-array>
+
+    <string name="content_desc_banner">Canvas Logo Banner</string>
+    <string name="login_title">Log in to your account</string>
+    <string name="login_hint_email">Email</string>
+    <string name="login_hint_password">Password</string>
+    <string name="login_button_text">Log in</string>
+    <string name="login_register_prompt">Don\'t have an account? Register</string>
+
+    <string name="register_title">Create an account</string>
+    <string name="register_hint_username">Username</string>
+    <string name="register_hint_email">Email</string>
+    <string name="register_hint_password">Password</string>
+    <string name="register_button_text">Sign up</string>
+    <string name="register_login_prompt">Already have an account? Log in</string>
+
+    <string name="main_title">My whiteboards</string>
+    <string name="main_logout">Log out</string>
+    <string name="main_about">About</string>
+    <string name="content_desc_fab_add">Create whiteboard</string>
+    <string name="create_btn_creating">Creating...</string>
+    <string name="create_btn_create">Create</string>
+    <string name="error_name_empty">Name cannot be empty</string>
+    <string name="toast_create_failed">Failed to create</string>
+    <string name="toast_network_error">Network error</string>
+    <string name="share_btn_sharing">Sharing...</string>
+    <string name="share_btn_share">Share</string>
+    <string name="toast_user_added">Added user successfully!</string>
+    <string name="toast_user_add_error">Error adding user.</string>
+    <string name="toast_link_copied">Link copied to clipboard</string>
+    <string name="role_owner">Owner</string>
+    <string name="unknown_email">Unknown</string>
+    <string name="dialog_remove_collab_title">Remove Collaborator</string>
+    <string name="dialog_remove_collab_msg">Remove %1$s from this whiteboard?</string>
+    <string name="toast_role_updated">Role updated</string>
+    <string name="dialog_delete_board_title">Delete Whiteboard</string>
+    <string name="dialog_delete_board_msg">Are you sure you want to delete \'%1$s\'? This action cannot be undone.</string>
+    <string name="toast_board_deleted">Whiteboard deleted</string>
+    <string name="toast_delete_error_prefix">Error deleting:</string>
+
+    <string name="about_title">About Canvas</string>
+    <string name="about_description">This application was developed as a final project at Institut Jaume Huguet in Valls. It is a free and open-source collaborative whiteboard platform.</string>
+    <string name="btn_change_language">Change Language (EN/ES/CA)</string>
+    <string name="btn_open_map">Where was it developed?</string>
+
+    <string name="dialog_share_title">Share Whiteboard</string>
+    <string name="dialog_share_hint_email">Invite users (email)</string>
+    <string name="dialog_share_collaborators">COLLABORATORS</string>
+    <string name="dialog_share_copy_link">Copy link</string>
+    <string name="dialog_share_done">Done</string>
+    <string name="dialog_create_title">Create Whiteboard</string>
+    <string name="dialog_create_hint_name">Whiteboard name</string>
+    <string name="dialog_confirm_title_default">Confirm Action</string>
+    <string name="dialog_confirm_msg_default">Are you sure?</string>
+
+    <string name="role_viewer">Viewer</string>
+    <string name="role_editor">Editor</string>
+
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+    <string name="lorem_ipsum">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</string>
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
 </resources>

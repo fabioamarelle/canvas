@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    app:cardBackgroundColor="#FFFFFF"
+    app:cardCornerRadius="4dp"
+    app:cardElevation="8dp"
+    app:strokeColor="#dfe1e6"
+    app:strokeWidth="1dp">
+
+    <LinearLayout
+        android:layout_width="140dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingVertical="4dp">
+
+        <TextView
+            android:id="@+id/roleViewer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="16dp"
+            android:paddingVertical="12dp"
+            android:background="?attr/selectableItemBackground"
+            android:text="@string/role_viewer"
+            android:textColor="#172b4d"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/roleEditor"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="16dp"
+            android:paddingVertical="12dp"
+            android:background="?attr/selectableItemBackground"
+            android:text="@string/role_editor"
+            android:textColor="#172b4d"
+            android:textSize="14sp" />
+
+        <View
+            android:id="@+id/roleDivider"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#ebecf0"
+            android:layout_marginVertical="4dp"/>
+
+        <TextView
+            android:id="@+id/roleRemove"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="16dp"
+            android:paddingVertical="12dp"
+            android:background="?attr/selectableItemBackground"
+            android:text="@string/btn_remove"
+            android:textColor="#de350b"
+            android:textSize="14sp" />
+
+    </LinearLayout>
+</com.google.android.material.card.MaterialCardView>

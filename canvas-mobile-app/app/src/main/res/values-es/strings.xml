@@ -1,4 +1,71 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Canvas</string>
+    <string name="error_prefix">Error:</string>
+    <string name="error_network_prefix">Error de red:</string>
+    <string name="btn_cancel">Cancelar</string>
+    <string name="btn_remove">Eliminar</string>
+    <string name="btn_delete">Borrar</string>
+    <string name="btn_back">Volver</string>
+    <string name="btn_confirm">Confirmar</string>
+
+    <string-array name="share_roles">
+        <item>VIEWER</item>
+        <item>EDITOR</item>
+    </string-array>
+
+    <string name="content_desc_banner">Banner del logo de Canvas</string>
+    <string name="login_title">Inicia sesión en tu cuenta</string>
+    <string name="login_hint_email">Correo electrónico</string>
+    <string name="login_hint_password">Contraseña</string>
+    <string name="login_button_text">Iniciar sesión</string>
+    <string name="login_register_prompt">¿No tienes cuenta? Regístrate</string>
+
+    <string name="register_title">Crea una cuenta</string>
+    <string name="register_hint_username">Nombre de usuario</string>
+    <string name="register_hint_email">Correo electrónico</string>
+    <string name="register_hint_password">Contraseña</string>
+    <string name="register_button_text">Registrarse</string>
+    <string name="register_login_prompt">¿Ya tienes cuenta? Inicia sesión</string>
+
+    <string name="main_title">Mis pizarras</string>
+    <string name="main_logout">Cerrar sesión</string>
+    <string name="main_about">Info</string>
+    <string name="content_desc_fab_add">Crear pizarra</string>
+    <string name="create_btn_creating">Creando...</string>
+    <string name="create_btn_create">Crear</string>
+    <string name="error_name_empty">El nombre no puede estar vacío</string>
+    <string name="toast_create_failed">Fallo al crear</string>
+    <string name="toast_network_error">Error de red</string>
+    <string name="share_btn_sharing">Compartiendo...</string>
+    <string name="share_btn_share">Compartir</string>
+    <string name="toast_user_added">¡Usuario añadido con éxito!</string>
+    <string name="toast_user_add_error">Error al añadir usuario.</string>
+    <string name="toast_link_copied">Enlace copiado al portapapeles</string>
+    <string name="role_owner">Propietario</string>
+    <string name="unknown_email">Desconocido</string>
+    <string name="dialog_remove_collab_title">Eliminar colaborador</string>
+    <string name="dialog_remove_collab_msg">¿Eliminar a %1$s de esta pizarra?</string>
+    <string name="toast_role_updated">Rol actualizado</string>
+    <string name="dialog_delete_board_title">Borrar Pizarra</string>
+    <string name="dialog_delete_board_msg">¿Seguro que quieres borrar \'%1$s\'? Esta acción no se puede deshacer.</string>
+    <string name="toast_board_deleted">Pizarra borrada</string>
+    <string name="toast_delete_error_prefix">Error al borrar:</string>
+
+    <string name="about_title">Sobre Canvas</string>
+    <string name="about_description">Esta aplicación ha sido desarrollada como proyecto final en el Institut Jaume Huguet de Valls. Es una plataforma de pizarras colaborativas gratuita y de código abierto.</string>
+    <string name="btn_change_language">Cambiar Idioma (EN/ES/CA)</string>
+    <string name="btn_open_map">¿Dónde se desarrolló?</string>
+
+    <string name="dialog_share_title">Compartir Pizarra</string>
+    <string name="dialog_share_hint_email">Invitar usuarios (email)</string>
+    <string name="dialog_share_collaborators">COLABORADORES</string>
+    <string name="dialog_share_copy_link">Copiar enlace</string>
+    <string name="dialog_share_done">Hecho</string>
+    <string name="dialog_create_title">Crear Pizarra</string>
+    <string name="dialog_create_hint_name">Nombre de la pizarra</string>
+    <string name="dialog_confirm_title_default">Confirmar acción</string>
+    <string name="dialog_confirm_msg_default">¿Estás seguro?</string>
+
+    <string name="role_viewer">Lector</string>
+    <string name="role_editor">Editor</string>
 </resources>

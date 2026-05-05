@@ -1,4 +1,71 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Canvas</string>
+    <string name="error_prefix">Error:</string>
+    <string name="error_network_prefix">Error de xarxa:</string>
+    <string name="btn_cancel">Cancel·lar</string>
+    <string name="btn_remove">Eliminar</string>
+    <string name="btn_delete">Esborrar</string>
+    <string name="btn_back">Tornar</string>
+    <string name="btn_confirm">Confirmar</string>
+
+    <string-array name="share_roles">
+        <item>VIEWER</item>
+        <item>EDITOR</item>
+    </string-array>
+
+    <string name="content_desc_banner">Bàner del logotip de Canvas</string>
+    <string name="login_title">Inicia sessió al teu compte</string>
+    <string name="login_hint_email">Correu electrònic</string>
+    <string name="login_hint_password">Contrasenya</string>
+    <string name="login_button_text">Inicia sessió</string>
+    <string name="login_register_prompt">No tens compte? Registra\'t</string>
+
+    <string name="register_title">Crea un compte</string>
+    <string name="register_hint_username">Nom d\'usuari</string>
+    <string name="register_hint_email">Correu electrònic</string>
+    <string name="register_hint_password">Contrasenya</string>
+    <string name="register_button_text">Registrar-se</string>
+    <string name="register_login_prompt">Ja tens compte? Inicia sessió</string>
+
+    <string name="main_title">Les meves pissarres</string>
+    <string name="main_logout">Tancar sessió</string>
+    <string name="main_about">Info</string>
+    <string name="content_desc_fab_add">Crear pissarra</string>
+    <string name="create_btn_creating">Creant...</string>
+    <string name="create_btn_create">Crear</string>
+    <string name="error_name_empty">El nom no pot estar buit</string>
+    <string name="toast_create_failed">S\'ha produït un error en crear</string>
+    <string name="toast_network_error">Error de xarxa</string>
+    <string name="share_btn_sharing">Compartint...</string>
+    <string name="share_btn_share">Compartir</string>
+    <string name="toast_user_added">Usuari afegit amb èxit!</string>
+    <string name="toast_user_add_error">Error en afegir usuari.</string>
+    <string name="toast_link_copied">Enllaç copiat al porta-retalls</string>
+    <string name="role_owner">Propietari</string>
+    <string name="unknown_email">Desconegut</string>
+    <string name="dialog_remove_collab_title">Eliminar col·laborador</string>
+    <string name="dialog_remove_collab_msg">Vols eliminar %1$s d\'aquesta pissarra?</string>
+    <string name="toast_role_updated">Rol actualitzat</string>
+    <string name="dialog_delete_board_title">Esborrar Pissarra</string>
+    <string name="dialog_delete_board_msg">Segur que vols esborrar \'%1$s\'? Aquesta acció no es pot desfer.</string>
+    <string name="toast_board_deleted">Pissarra esborrada</string>
+    <string name="toast_delete_error_prefix">Error en esborrar:</string>
+
+    <string name="about_title">Sobre Canvas</string>
+    <string name="about_description">Aquesta aplicació ha estat desenvolupada com a projecte final a l\'Institut Jaume Huguet de Valls. És una plataforma de pissarres col·laboratives gratuïta i de codi obert.</string>
+    <string name="btn_change_language">Canviar Idioma (EN/ES/CA)</string>
+    <string name="btn_open_map">On s\'ha desenvolupat?</string>
+
+    <string name="dialog_share_title">Compartir Pissarra</string>
+    <string name="dialog_share_hint_email">Convidar usuaris (email)</string>
+    <string name="dialog_share_collaborators">COL·LABORADORS</string>
+    <string name="dialog_share_copy_link">Copiar enllaç</string>
+    <string name="dialog_share_done">Fet</string>
+    <string name="dialog_create_title">Crear Pissarra</string>
+    <string name="dialog_create_hint_name">Nom de la pissarra</string>
+    <string name="dialog_confirm_title_default">Confirmar acció</string>
+    <string name="dialog_confirm_msg_default">N\'estàs segur?</string>
+
+    <string name="role_viewer">Lector</string>
+    <string name="role_editor">Editor</string>
 </resources>

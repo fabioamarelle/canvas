@@ -9,6 +9,7 @@
     android:clickable="true"
     android:focusable="true"
     android:foreground="?android:attr/selectableItemBackground"
+    android:stateListAnimator="@animator/card_press"
     app:cardBackgroundColor="#235FAC"
     app:cardCornerRadius="12dp"
     app:cardElevation="2dp"
@@ -41,7 +42,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/imageButton8"
+            android:id="@+id/deleteButton"
             style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -50,18 +51,18 @@
             android:minHeight="0dp"
             android:paddingHorizontal="16dp"
             android:paddingVertical="8dp"
-            android:text="Delete"
+            android:text="@string/btn_delete"
             android:textAllCaps="false"
             android:textColor="#FFFFFF"
             app:backgroundTint="#33FFFFFF"
             app:cornerRadius="6dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/imageButton7"
+            app:layout_constraintEnd_toStartOf="@+id/shareButton"
             app:layout_constraintTop_toBottomOf="@+id/whiteboardName"
             app:layout_constraintVertical_bias="1.0" />
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/imageButton7"
+            android:id="@+id/shareButton"
             style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -69,7 +70,7 @@
             android:minHeight="0dp"
             android:paddingHorizontal="16dp"
             android:paddingVertical="8dp"
-            android:text="Share"
+            android:text="@string/share_btn_share"
             android:textAllCaps="false"
             android:textColor="#235FAC"
             app:backgroundTint="#FFFFFF"
