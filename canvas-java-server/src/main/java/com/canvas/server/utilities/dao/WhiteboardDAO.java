@@ -3,7 +3,7 @@ package com.canvas.server.utilities.dao;
 import com.canvas.server.models.AllowedUser;
 import com.canvas.server.models.User;
 import com.canvas.server.models.Whiteboard;
-import com.canvas.server.entities.enums.PermissionType;
+import com.canvas.server.models.enums.PermissionType;
 import com.canvas.server.utilities.DatabaseHelper;
 import com.canvas.server.utilities.logging.LoggingHelper;
 

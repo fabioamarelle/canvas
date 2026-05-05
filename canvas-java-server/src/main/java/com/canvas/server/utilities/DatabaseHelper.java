@@ -14,13 +14,11 @@ public class DatabaseHelper {
         if (user == null) user = "root";
         if (password == null) password = "password";
 
-        System.out.println("INTENTANT CONNECTAR A: " + url + " AMB USUARI: " + user);
-
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             return DriverManager.getConnection(url, user, password);
         } catch (Exception e) {
-            System.err.println("ERROR DE CONNEXIÓ: " + e.getMessage());
+            LoggingHelper.logError("DatabaseHelper", e);
             return null;
         }
     }

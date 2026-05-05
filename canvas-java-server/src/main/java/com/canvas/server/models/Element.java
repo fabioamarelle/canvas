@@ -1,6 +1,6 @@
 package com.canvas.server.models;
 
-import com.canvas.server.entities.enums.ElementType;
+import com.canvas.server.models.enums.ElementType;
 import com.fasterxml.jackson.databind.JsonNode;
 
 import java.util.UUID;

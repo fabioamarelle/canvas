@@ -1,6 +1,6 @@
 package com.canvas.server.models;
 
-import com.canvas.server.entities.enums.PermissionType;
+import com.canvas.server.models.enums.PermissionType;
 
 import java.util.UUID;
 

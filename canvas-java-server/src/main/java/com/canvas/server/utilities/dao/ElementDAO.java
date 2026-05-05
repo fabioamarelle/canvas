@@ -1,7 +1,7 @@
 package com.canvas.server.utilities.dao;
 
 import com.canvas.server.models.Element;
-import com.canvas.server.entities.enums.ElementType;
+import com.canvas.server.models.enums.ElementType;
 import com.canvas.server.utilities.DatabaseHelper;
 import com.canvas.server.utilities.logging.LoggingHelper;
 import com.fasterxml.jackson.databind.JsonNode;

@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.canvas.server.entities.enums.PermissionType;
+import com.canvas.server.models.enums.PermissionType;
 import com.canvas.server.models.AllowedUser;
 import com.canvas.server.models.User;
 import com.canvas.server.utilities.dao.UserDAO;
