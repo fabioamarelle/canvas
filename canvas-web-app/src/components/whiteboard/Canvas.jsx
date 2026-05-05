@@ -48,6 +48,11 @@ const Canvas = ({ userName = "Usuari", readOnly = false }) => {
   const wsRef = useRef(null);
   const { id } = useParams();
 
+  const activePointers = useRef(new Map());
+  const lastPinchDist = useRef(null);
+  const lastPinchCenter = useRef(null);
+  const lastTapTime = useRef(0);
+
   const [activeTool, setActiveTool] = useState(null);
   const [elements, setElements] = useState([]);
   const [selectedElementId, setSelectedElementId] = useState(null);
@@ -292,7 +297,7 @@ const Canvas = ({ userName = "Usuari", readOnly = false }) => {
     }
   };
 
-  const getMousePos = (e) => {
+  const getPointerPos = (e) => {
     const rect = canvasRef.current.getBoundingClientRect();
     return { x: (e.clientX - rect.left - panOffset.x) / scale, y: (e.clientY - rect.top - panOffset.y) / scale };
   };
@@ -314,7 +319,7 @@ const Canvas = ({ userName = "Usuari", readOnly = false }) => {
     const p = el.properties;
     const w = p.width || (el.type === 'NOTE' ? 150 : 200);
     const h = p.height || (el.type === 'NOTE' ? 150 : 50);
-    const sz = (HANDLE_SIZE + 4) / scale;
+    const sz = (HANDLE_SIZE + 10) / scale;
     const inBox = (px, py) => isPointInRect(x, y, px - sz / 2, py - sz / 2, sz, sz);
     
     if (inBox(p.x, p.y)) return 'tl';
@@ -324,9 +329,31 @@ const Canvas = ({ userName = "Usuari", readOnly = false }) => {
     return null;
   };
 
-  const handleMouseDown = (e) => {
+  
+  const handlePointerDown = (e) => {
     if (ignoreClickRef.current || interactionState === 'WRITING') return;
-    const { x, y } = getMousePos(e);
+    
+    e.target.setPointerCapture(e.pointerId);
+    activePointers.current.set(e.pointerId, { x: e.clientX, y: e.clientY });
+
+    if (activePointers.current.size >= 2) {
+      setInteractionState('PINCHING');
+      const pts = Array.from(activePointers.current.values());
+      lastPinchDist.current = Math.hypot(pts[0].x - pts[1].x, pts[0].y - pts[1].y);
+      lastPinchCenter.current = { x: (pts[0].x + pts[1].x) / 2, y: (pts[0].y + pts[1].y) / 2 };
+      return;
+    }
+
+    const now = Date.now();
+    const isDoubleTap = now - lastTapTime.current < 300;
+    lastTapTime.current = now;
+
+    if (isDoubleTap) {
+      handleDoubleClick(e);
+      return;
+    }
+
+    const { x, y } = getPointerPos(e);
 
     if (e.button === 1 || activeTool === 'Hand') {
       setInteractionState('PANNING'); setStartPan({ x: e.clientX, y: e.clientY }); return;
@@ -386,13 +413,53 @@ const Canvas = ({ userName = "Usuari", readOnly = false }) => {
     }
   };
 
-  const handleMouseMove = (e) => {
-    const { x, y } = getMousePos(e);
-    broadcastChange('MOUSE_MOVE', { x, y, userName });
-
-    if (activeTool === 'Eraser' && interactionState === 'IDLE' && !readOnly) {
-      setHoveredElementId(getElementAtPosition(x, y)?.id || null);
+  const handlePointerMove = (e) => {
+    if (!activePointers.current.has(e.pointerId)) {
+      const { x, y } = getPointerPos(e);
+      broadcastChange('MOUSE_MOVE', { x, y, userName });
+      if (activeTool === 'Eraser' && interactionState === 'IDLE' && !readOnly) {
+        setHoveredElementId(getElementAtPosition(x, y)?.id || null);
+      }
+      return;
     }
+
+    activePointers.current.set(e.pointerId, { x: e.clientX, y: e.clientY });
+
+    if (interactionState === 'PINCHING' && activePointers.current.size >= 2) {
+      const pts = Array.from(activePointers.current.values());
+      const currentDist = Math.hypot(pts[0].x - pts[1].x, pts[0].y - pts[1].y);
+      const currentCenter = { x: (pts[0].x + pts[1].x) / 2, y: (pts[0].y + pts[1].y) / 2 };
+
+      if (lastPinchDist.current && lastPinchCenter.current) {
+        const distRatio = currentDist / lastPinchDist.current;
+        const panDx = currentCenter.x - lastPinchCenter.current.x;
+        const panDy = currentCenter.y - lastPinchCenter.current.y;
+        
+        const rect = canvasRef.current.getBoundingClientRect();
+        const pinchX = currentCenter.x - rect.left;
+        const pinchY = currentCenter.y - rect.top;
+
+        setScale(prevScale => {
+          const newScale = Math.min(Math.max(prevScale * distRatio, MIN_ZOOM), MAX_ZOOM);
+          setPanOffset(prevPan => {
+            const tempPanX = prevPan.x + panDx;
+            const tempPanY = prevPan.y + panDy;
+            return {
+              x: pinchX - ((pinchX - tempPanX) / prevScale) * newScale,
+              y: pinchY - ((pinchY - tempPanY) / prevScale) * newScale
+            };
+          });
+          return newScale;
+        });
+      }
+
+      lastPinchDist.current = currentDist;
+      lastPinchCenter.current = currentCenter;
+      return;
+    }
+
+    const { x, y } = getPointerPos(e);
+    broadcastChange('MOUSE_MOVE', { x, y, userName });
     
     if (interactionState === 'PANNING') {
       setPanOffset(prev => ({ x: prev.x + (e.clientX - startPan.x), y: prev.y + (e.clientY - startPan.y) }));
@@ -431,7 +498,18 @@ const Canvas = ({ userName = "Usuari", readOnly = false }) => {
     }
   };
 
-  const handleMouseUp = () => {
+  const handlePointerUp = (e) => {
+    activePointers.current.delete(e.pointerId);
+
+    if (activePointers.current.size > 0) {
+      if (interactionState === 'PINCHING') {
+        setInteractionState('IDLE');
+        const remainingPtr = Array.from(activePointers.current.values())[0];
+        setStartPan({ x: remainingPtr.x, y: remainingPtr.y });
+      }
+      return; 
+    }
+
     if (interactionState === 'WRITING') return;
 
     if (!readOnly && ['DRAWING', 'MOVING', 'RESIZING', 'ERASING'].includes(interactionState)) {
@@ -452,11 +530,13 @@ const Canvas = ({ userName = "Usuari", readOnly = false }) => {
     
     setInteractionState('IDLE'); 
     setResizeHandle(null);
+    lastPinchDist.current = null;
+    lastPinchCenter.current = null;
   };
 
   const handleDoubleClick = (e) => {
     if (activeTool === 'Eraser' || readOnly) return;
-    const { x, y } = getMousePos(e);
+    const { x, y } = getPointerPos(e);
     const el = getElementAtPosition(x, y);
     if (el && ['TEXT', 'NOTE'].includes(el.type)) {
       setInteractionState('WRITING');
@@ -605,10 +685,12 @@ const Canvas = ({ userName = "Usuari", readOnly = false }) => {
     >
       <canvas 
         ref={canvasRef} 
-        onMouseDown={handleMouseDown} 
-        onMouseMove={handleMouseMove} 
-        onMouseUp={handleMouseUp} 
-        onDoubleClick={handleDoubleClick} 
+        onPointerDown={handlePointerDown} 
+        onPointerMove={handlePointerMove} 
+        onPointerUp={handlePointerUp} 
+        onPointerCancel={handlePointerUp}
+        onPointerOut={handlePointerUp}
+        onDoubleClick={handleDoubleClick}
         style={{ cursor: getCursorStyle(), display: 'block', touchAction: 'none' }} 
       />
 
@@ -680,7 +762,7 @@ const Canvas = ({ userName = "Usuari", readOnly = false }) => {
           value={textInput.text}
           onChange={(e) => setTextInput({ ...textInput, text: e.target.value })}
           onBlur={finalizeTextInput}
-          onMouseDown={e => e.stopPropagation()}
+          onPointerDown={e => e.stopPropagation()}
           className={`canvas-textarea ${textInput.type === 'NOTE' ? 'is-note' : 'is-text'}`}
           style={{
             ...getOverlayStyle(textInput.x, textInput.y, textInput.width, textInput.height),
@@ -689,17 +771,18 @@ const Canvas = ({ userName = "Usuari", readOnly = false }) => {
             color: textInput.color || '#172B4D',
             backgroundColor: textInput.type === 'NOTE' ? (textInput.backgroundColor || NOTE_COLORS[0]) : undefined,
             padding: textInput.type === 'NOTE' ? `${PADDING * scale}px` : '4px',
+            touchAction: 'none'
           }}
           placeholder="Start typing..."
         />
       )}
 
       {isAddImagePopupOpen && (
-        <div className="popup-overlay" onClick={() => {
+        <div className="popup-overlay" onPointerDown={() => {
           setIsAddImagePopupOpen(false);
           setActiveTool(null);
         }}>
-          <form className="popup-content" onClick={e => e.stopPropagation()} onSubmit={handleAddImagePopupSubmit}>
+          <form className="popup-content" onPointerDown={e => e.stopPropagation()} onSubmit={handleAddImagePopupSubmit}>
             <h3 className="popup-title">Add Image</h3>
             <input className="popup-input" autoFocus value={addImagePopupFormData.url} onChange={(e) => setAddImagePopupFormData({ url: e.target.value })} placeholder="Enter Image URL (https://...)" />
             <div className="popup-actions">
